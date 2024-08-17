@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
 
     val classGraph = ClassGraph().enableAllInfo().scan()
 
-    val dayClass = classGraph.getClassesImplementing(Day::class.java).find { it.name == "me.grian.year${year}.Day${day}" }!!
+    val dayClass = classGraph.getClassesImplementing(Day::class.java).find { it.name == "me.grian.year${year}.day${day}.Day${day}" }!!
 
     val instance = dayClass.loadClass().getDeclaredConstructor().newInstance() as Day
 

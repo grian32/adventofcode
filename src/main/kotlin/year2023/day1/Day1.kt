@@ -1,4 +1,4 @@
-package me.grian.year2023
+package me.grian.year2023.day1
 
 import me.grian.Day
 import me.grian.util.getInputText
