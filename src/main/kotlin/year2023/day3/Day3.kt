@@ -92,46 +92,9 @@ class Day3 : Day {
             val twoMatches = twoRegex.findAll(line).toList()
             val threeMatches = threeRegex.findAll(line).toList()
 
-            // TODO: REFACTOR
-
-            oneMatches.forEach { match ->
-                val y = match.range.last
-
-                oneOffsets.forEach { offset ->
-                    for (i in offset.second) {
-                        if (!lines.hasIndex(x + offset.first, y + i)) continue
-                        if (lines[x + offset.first][y + i] == '*') {
-                            starMap[(x + offset.first) to (y + i)]!!.add(match.value.toInt())
-                        }
-                    }
-                }
-            }
-
-            twoMatches.forEach { match ->
-                val y = match.range.last
-
-                twoOffsets.forEach { offset ->
-                    for (i in offset.second) {
-                        if (!lines.hasIndex(x + offset.first, y + i)) continue
-                        if (lines[x + offset.first][y + i] == '*') {
-                            starMap[(x + offset.first) to (y + i)]!!.add(match.value.toInt())
-                        }
-                    }
-                }
-            }
-
-            threeMatches.forEach { match ->
-                val y = match.range.last
-
-                threeOffsets.forEach { offset ->
-                    for (i in offset.second) {
-                        if (!lines.hasIndex(x + offset.first, y + i)) continue
-                        if (lines[x + offset.first][y + i] == '*') {
-                            starMap[(x + offset.first) to (y + i)]!!.add(match.value.toInt())
-                        }
-                    }
-                }
-            }
+            processNumberMatchesP2(oneMatches, oneOffsets, lines, starMap, x)
+            processNumberMatchesP2(twoMatches, twoOffsets, lines, starMap, x)
+            processNumberMatchesP2(threeMatches, threeOffsets, lines, starMap, x)
         }
 
         starMap.filter { it.value.size == 2 }.forEach { (_, parts) ->
@@ -157,5 +120,28 @@ class Day3 : Day {
         }
 
         return sum
+    }
+
+    private fun processNumberMatchesP2(
+        matches: List<MatchResult>,
+        offsets: List<Pair<Int, IntRange>>,
+        lines: List<String>,
+        starMap: MutableMap<Pair<Int, Int>, MutableList<Int>>,
+        x: Int
+    ): MutableMap<Pair<Int, Int>, MutableList<Int>> {
+        matches.forEach { match ->
+            val y = match.range.last
+
+            offsets.forEach { offset ->
+                for (i in offset.second) {
+                    if (!lines.hasIndex(x + offset.first, y + i)) continue
+                    if (lines[x + offset.first][y + i] == '*') {
+                        starMap[(x + offset.first) to (y + i)]!!.add(match.value.toInt())
+                    }
+                }
+            }
+        }
+
+        return starMap
     }
 }
