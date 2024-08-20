@@ -2,6 +2,8 @@ package me.grian.year2023.day4
 
 import me.grian.Day
 import me.grian.util.getInputText
+import kotlin.math.max
+import kotlin.math.min
 
 class Day4 : Day {
     override val input: String = getInputText(4)
@@ -27,7 +29,28 @@ class Day4 : Day {
     }
 
     override fun partTwo(): String {
-        TODO("Not yet implemented")
+        val cards: MutableList<Card> = parseInput().toMutableList()
+        // game id to winning numbers
+        val cardWinning = mutableMapOf<Int, Int>()
+        val cardCounts = MutableList(cards.size) { 1 }
+
+        cards.forEachIndexed { idx, card ->
+            var amountOfWinning = 0
+
+            card.cardNumbers.forEach {
+                if (it in card.winningNumbers) amountOfWinning++
+            }
+
+            cardWinning[idx] = amountOfWinning
+        }
+
+        for (i in 1..cards.size) {
+            for (j in 0..<(cardWinning[i - 1]!!)) {
+                cardCounts[(i + j + 1).coerceAtMost(cards.size - 1)] += cardCounts[i]
+            }
+        }
+
+        return cardCounts.sum().toString()
     }
 
     private fun parseInput(): List<Card> {
