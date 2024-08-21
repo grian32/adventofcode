@@ -5,7 +5,7 @@ import me.grian.util.getInputText
 import me.grian.util.hasIndex
 
 class Day3 : Day {
-    override val input: String = getInputText(3)
+    override val input: String = getInputText(2023,3)
 
     private val symbolRegex = Regex("[^a-zA-Z0-9.\\n]")
 

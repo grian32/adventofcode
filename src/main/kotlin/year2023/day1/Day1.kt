@@ -4,7 +4,7 @@ import me.grian.Day
 import me.grian.util.getInputText
 
 class Day1 : Day {
-    override val input: String = getInputText(1)
+    override val input: String = getInputText(2023,1)
 
     override fun partOne(): String {
         val lines = input.lines()

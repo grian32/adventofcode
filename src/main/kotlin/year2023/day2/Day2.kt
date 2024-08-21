@@ -5,7 +5,7 @@ import me.grian.util.getInputText
 import me.grian.util.mul
 
 class Day2 : Day {
-    override val input: String = getInputText(2)
+    override val input: String = getInputText(2023,2)
 
     override fun partOne(): String {
         val parsedInput = parse()

@@ -6,7 +6,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Day4 : Day {
-    override val input: String = getInputText(4)
+    override val input: String = getInputText(2023,4)
 
     override fun partOne(): String {
         val cards: List<Card> = parseInput()
