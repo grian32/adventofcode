@@ -2,6 +2,7 @@ package me.grian.year2024.day1
 
 import me.grian.Day
 import me.grian.util.getInputText
+import kotlin.math.abs
 
 class Day1 : Day {
     override val input: String = getInputText(2024,1)
@@ -14,7 +15,7 @@ class Day1 : Day {
         val sortedRight = rightList.sorted()
 
         sortedLeft.zip(sortedRight).forEach {
-            sum += if (it.first - it.second > 0) it.first - it.second else it.second - it.first
+            sum += abs(it.first - it.second)
         }
 
         return sum.toString()
@@ -24,20 +25,10 @@ class Day1 : Day {
         val (leftList, rightList) = parseInput()
         var sum = 0
 
-        val countMap = mutableMapOf<Int, Int>()
-
-
-        rightList.forEach {
-            if (!countMap.containsKey(it)) {
-                countMap[it] = 1
-                return@forEach
-            }
-
-            countMap[it] = countMap[it]!! + 1
-        }
+        val countMap = rightList.groupingBy { it }.eachCount()
 
         leftList.forEach {
-            sum += it * if (countMap.containsKey(it)) countMap[it]!! else 0
+            sum += it * countMap.getOrDefault(it, 0)
         }
 
         return sum.toString()
