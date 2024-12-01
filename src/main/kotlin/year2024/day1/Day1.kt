@@ -9,13 +9,12 @@ class Day1 : Day {
 
     override fun partOne(): String {
         val (leftList, rightList) = parseInput()
-        var sum = 0
 
         val sortedLeft = leftList.sorted()
         val sortedRight = rightList.sorted()
 
-        sortedLeft.zip(sortedRight).forEach {
-            sum += abs(it.first - it.second)
+        val sum = sortedLeft.zip(sortedRight).sumOf {
+            abs(it.first - it.second)
         }
 
         return sum.toString()
@@ -23,12 +22,11 @@ class Day1 : Day {
 
     override fun partTwo(): String {
         val (leftList, rightList) = parseInput()
-        var sum = 0
 
         val countMap = rightList.groupingBy { it }.eachCount()
 
-        leftList.forEach {
-            sum += it * countMap.getOrDefault(it, 0)
+        val sum = leftList.sumOf {
+            it * countMap.getOrDefault(it, 0)
         }
 
         return sum.toString()
