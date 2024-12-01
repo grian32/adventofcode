@@ -32,17 +32,8 @@ class Day1 : Day {
         return sum.toString()
     }
 
-    private fun parseInput(): Pair<List<Int>, List<Int>> {
-        val leftList = mutableListOf<Int>()
-        val rightList = mutableListOf<Int>()
-
-        input.lines().forEach {
-            val (leftNum, rightNum) = it.split("   ").map(String::toInt)
-
-            leftList.add(leftNum)
-            rightList.add(rightNum)
-        }
-
-        return leftList to rightList
-    }
+    private fun parseInput(): Pair<List<Int>, List<Int>> = input.lines().map {
+        val (left, right) = it.split("   ").map(String::toInt)
+        left to right
+    }.unzip()
 }
