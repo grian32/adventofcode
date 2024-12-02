@@ -1,8 +1,9 @@
 package me.grian.year2024.day2
 
 import me.grian.Day
+import me.grian.util.dropAt
 import me.grian.util.getInputText
-import me.grian.util.removeAtNew
+import me.grian.util.dropAt
 import kotlin.math.abs
 
 class Day2 : Day {
@@ -23,7 +24,7 @@ class Day2 : Day {
 
     private fun checkRowP2(row: List<Int>): Boolean =
         checkRow(row) || row.indices.any {
-            checkRow(row.removeAtNew(it))
+            checkRow(row.dropAt(it))
         }
 
 
