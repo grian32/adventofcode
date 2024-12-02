@@ -11,17 +11,8 @@ class Day2 : Day {
         val grid = parseInput()
         var safeReports = 0
 
-        grid.forEachIndexed { idx, row ->
-            val differences = mutableListOf<Int>()
-
-            repeat(row.size - 1) {
-                differences.add(grid[idx][it] - grid[idx][it + 1])
-            }
-
-            if (differences.any { it == 0 || abs(it) > 3 }) return@forEachIndexed
-            if (differences.any { it > 0 } && differences.any { it < 0 }) return@forEachIndexed
-
-            safeReports++
+        grid.forEach { row ->
+            if (checkRow(row)) safeReports++
         }
 
         return safeReports.toString()
@@ -31,17 +22,17 @@ class Day2 : Day {
         val grid = parseInput()
         var safeReports = 0
 
-        grid.forEach grid@ {
-            if (checkRowP2(it)) {
+        grid.forEach grid@ { row ->
+            if (checkRow(row)) {
                 safeReports++
                 return@grid
             }
 
-            it.indices.forEach { idx ->
-                val listWithoutLevel = it.toMutableList()
-                listWithoutLevel.removeAt(idx)
+            row.indices.forEach { idx ->
+                val rowWithoutLevel = row.toMutableList()
+                rowWithoutLevel.removeAt(idx)
 
-                if (checkRowP2(listWithoutLevel)) {
+                if (checkRow(rowWithoutLevel)) {
                     safeReports++
                     return@grid
                 }
@@ -51,7 +42,7 @@ class Day2 : Day {
         return safeReports.toString()
     }
 
-    private fun checkRowP2(row: List<Int>): Boolean {
+    private fun checkRow(row: List<Int>): Boolean {
         val differences = mutableListOf<Int>()
 
         repeat(row.size - 1) {
