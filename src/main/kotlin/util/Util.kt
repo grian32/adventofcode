@@ -7,5 +7,8 @@ fun getInputText(year: Int, day: Int): String = Path.of("src/main/resources/inpu
 
 fun List<String>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x].indices
 
-fun List<LongRange>.concat(): LongRange
-        = this.minOf { it.first }..(this.maxOf { it.last })
+fun <T> List<T>.removeAtNew(idx: Int): List<T> {
+    val newList = toMutableList()
+    newList.removeAt(idx)
+    return newList
+}
