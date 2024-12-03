@@ -7,8 +7,5 @@ fun getInputText(year: Int, day: Int): String = Path.of("src/main/resources/inpu
 
 fun List<String>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x].indices
 
-fun <T> List<T>.dropAt(idx: Int): List<T> {
-    val newList = toMutableList()
-    newList.removeAt(idx)
-    return newList
-}
+fun <T> List<T>.dropAt(idx: Int): List<T> =
+    toMutableList().apply { removeAt(idx) }

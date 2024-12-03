@@ -22,8 +22,7 @@ class Day3 : Day {
         val mulRegexp = Regex("mul\\((\\d{1,3},\\d{1,3})\\)")
         val disabledRegexp = Regex("don't\\(\\).+?(?=do\\(\\))")
 
-        val mergedInput = input.replace("\n", "")
-        val enabledInput = mergedInput.replace(disabledRegexp, "")
+        val enabledInput = input.replace("\n", "").replace(disabledRegexp, "")
 
         val sum = mulRegexp.findAll(enabledInput).sumOf {
             it.groupValues[1].split(",").map(String::toInt).mul()
