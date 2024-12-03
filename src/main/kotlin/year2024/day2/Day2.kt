@@ -3,7 +3,6 @@ package me.grian.year2024.day2
 import me.grian.Day
 import me.grian.util.dropAt
 import me.grian.util.getInputText
-import me.grian.util.dropAt
 import kotlin.math.abs
 
 class Day2 : Day {
