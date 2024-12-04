@@ -8,3 +8,8 @@ fun List<Int>.mul(): Int {
 
     return total
 }
+
+fun List<String>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x].indices
+
+fun <T> List<T>.dropAt(idx: Int): List<T> =
+    toMutableList().apply { removeAt(idx) }
