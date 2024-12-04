@@ -102,9 +102,7 @@ class Day4 : Day {
 
             if (!gridHasKey(dx, dy)) continue
 
-            if (
-                this[dx][dy] == value
-            ) {
+            if (this[dx][dy] == value) {
                 list.add(CoordinateSurroundings(
                     surrounding,
                     dx,
