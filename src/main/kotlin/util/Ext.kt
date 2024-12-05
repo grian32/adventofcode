@@ -13,3 +13,9 @@ fun List<String>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x
 
 fun <T> List<T>.dropAt(idx: Int): List<T> =
     toMutableList().apply { removeAt(idx) }
+
+fun <T> List<T>.middle(): T = this[(size - 1) / 2]
+
+fun <T> MutableList<T>.swap(firstIndex: Int, secondIndex: Int) {
+    this[firstIndex] = this[secondIndex].also { this[secondIndex] = this[firstIndex] }
+}
