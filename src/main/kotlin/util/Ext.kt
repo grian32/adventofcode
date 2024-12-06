@@ -19,3 +19,19 @@ fun <T> List<T>.middle(): T = this[(size - 1) / 2]
 fun <T> MutableList<T>.swap(firstIndex: Int, secondIndex: Int) {
     this[firstIndex] = this[secondIndex].also { this[secondIndex] = this[firstIndex] }
 }
+
+fun <T> List<T>.firstIndexOfInRange(value: T, range: IntRange): Int {
+    forEachIndexed { idx, elem ->
+        if (elem == value && idx in range) return idx
+    }
+
+    return -1
+}
+
+fun <T> List<T>.lastIndexOfInRange(value: T, range: IntRange): Int {
+    forEachIndexed { idx, elem ->
+        if (elem == value && idx in range) return idx
+    }
+
+    return -1
+}
