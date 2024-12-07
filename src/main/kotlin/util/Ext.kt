@@ -39,3 +39,23 @@ fun <T> List<T>.lastIndexOfInRange(value: T, range: IntRange): Int {
 fun <T> Pair<T, T>.swap(): Pair<T, T> {
     return second to first
 }
+
+// from gippity lol
+fun <T> List<T>.permute(length: Int): List<List<T>> {
+    val result = mutableListOf<List<T>>()
+
+    fun backtrack(current: MutableList<T>) {
+        if (current.size == length) {
+            result.add(current.toList())
+            return
+        }
+        for (element in this) {
+            current.add(element)
+            backtrack(current)
+            current.removeAt(current.size - 1)
+        }
+    }
+
+    backtrack(mutableListOf())
+    return result
+}
