@@ -15,21 +15,9 @@ class Day6 : Day {
         val guard = Guard(
             guardIndex.first,
             guardIndex.second,
-            Direction.NONE
+            Direction.LEFT // setting this to LEFT as last direction makes it go up straightaway
         )
         val squaresTraversed: MutableSet<Pair<Int, Int>> = mutableSetOf()
-
-        for (x in (guard.x downTo 0)) {
-            if (grid[x][guard.y] == '#') {
-                // might be bad but working preliminary
-                (guard.x downTo x + 1).forEach { xTraversed ->
-                    squaresTraversed.add(xTraversed to guard.y)
-                }
-                guard.x = x + 1
-                guard.lastDirection = Direction.UP
-                break
-            }
-        }
 
         outer@ while (true) {
             when (guard.lastDirection) {
@@ -122,7 +110,6 @@ class Day6 : Day {
                         break@outer
                     }
                 }
-                Direction.NONE -> {} // needs this to be exhaustive wont actually happen unless i fucked up elsewhere
             }
         }
 
