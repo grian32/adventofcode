@@ -3,7 +3,6 @@ package me.grian.year2024.day7
 import me.grian.Day
 import me.grian.util.getInputText
 import me.grian.util.permute
-import kotlin.time.measureTime
 
 class Day7 : Day {
     override val input: String = getInputText(2024, 7)
@@ -13,7 +12,7 @@ class Day7 : Day {
         val operators = listOf("+", "*")
 
         val goodNumbers: MutableSet<Long> = mutableSetOf()
-        val time = measureTime {
+
         // cant use sum of because there are duplicates so i need a set
         equations.forEach { (finalValue, numbers) ->
             val equationStrings = getEquationStrings(numbers, operators)
@@ -29,48 +28,46 @@ class Day7 : Day {
 
                 if (currentNumber == finalValue) goodNumbers.add(currentNumber)
             }
-        }}
-
-        println("p1: $time")
+        }
 
         return goodNumbers.sum().toString()
     }
 
+    // really slow bruteforce soln but it works
     override fun partTwo(): String {
         val equations = parseInput()
         val operators = listOf("+", "*", "||")
 
         val goodNumbers: MutableSet<Long> = mutableSetOf()
 
-        val time = measureTime {
         equations.forEach { (finalValue, numbers) ->
             val equationStrings = getEquationStrings(numbers, operators)
 
             equationStrings.forEach { equation ->
-                var currentNumber = equation[0]
+                var currentString = equation[0]
                 (0..equation.lastIndex - 2 step 2).forEach {
                     val op = equation[it + 1]
-                    val nextNumber = equation[it + 2]
+                    val nextString = equation[it + 2]
+                    val nextLong = nextString.toLong()
 
                     when (op) {
                         "+" -> {
                             // this is really ass, but you have to deal with the concat stuff somehow
-                            currentNumber = (currentNumber.toLong() + nextNumber.toLong()).toString()
+                            // cant even do a currentLong because then i'd have to update it too
+                            currentString = (currentString.toLong() + nextLong).toString()
                         }
                         "*" -> {
-                            currentNumber = (currentNumber.toLong() * nextNumber.toLong()).toString()
+                            currentString = (currentString.toLong() * nextLong).toString()
                         }
                         "||" -> {
-                            currentNumber += nextNumber
+                            currentString += nextString
                         }
                     }
                 }
 
-                if (currentNumber.toLong() == finalValue) goodNumbers.add(currentNumber.toLong())
+                if (currentString.toLong() == finalValue) goodNumbers.add(currentString.toLong())
             }
-        }}
-
-        println("p2: $time")
+        }
 
         return goodNumbers.sum().toString()
     }
@@ -94,7 +91,7 @@ class Day7 : Day {
         val equationStrings: MutableList<List<String>> = mutableListOf()
 
         perms.forEach { perm ->
-            val list = numbers.zip(perm).map { it.toList().map { ot -> ot.toString() } }.flatten().toMutableList()
+            val list = numbers.zip(perm).map { it.toList().map { i -> i.toString() } }.flatten().toMutableList()
             list.add(numbers.last().toString())
 
             equationStrings.add(list)
