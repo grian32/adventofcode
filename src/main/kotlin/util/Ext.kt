@@ -35,3 +35,7 @@ fun <T> List<T>.lastIndexOfInRange(value: T, range: IntRange): Int {
 
     return -1
 }
+
+fun <T> Pair<T, T>.swap(): Pair<T, T> {
+    return second to first
+}
