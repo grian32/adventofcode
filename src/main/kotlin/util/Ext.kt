@@ -9,7 +9,7 @@ fun List<Int>.mul(): Int {
     return total
 }
 
-fun List<String>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x].indices
+fun <T> List<List<T>>.hasIndex(x: Int, y: Int): Boolean = x in indices && y in this[x].indices
 
 fun <T> List<T>.dropAt(idx: Int): List<T> =
     toMutableList().apply { removeAt(idx) }
@@ -26,18 +26,6 @@ fun <T> List<T>.firstIndexOfInRange(value: T, range: IntRange): Int {
     }
 
     return -1
-}
-
-fun <T> List<T>.lastIndexOfInRange(value: T, range: IntRange): Int {
-    forEachIndexed { idx, elem ->
-        if (elem == value && idx in range) return idx
-    }
-
-    return -1
-}
-
-fun <T> Pair<T, T>.swap(): Pair<T, T> {
-    return second to first
 }
 
 // from gippity lol
@@ -59,3 +47,6 @@ fun <T> List<T>.permute(length: Int): List<List<T>> {
     backtrack(mutableListOf())
     return result
 }
+
+fun List<String>.filterIsNotEmpty(): List<String> =
+    filter { it.isNotEmpty() }

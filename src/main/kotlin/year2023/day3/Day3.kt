@@ -112,7 +112,7 @@ class Day3 : Day {
 
             offsets.forEach { offset ->
                 for (i in offset.second) {
-                    if (!lines.hasIndex(x + offset.first, y + i)) continue
+                    if (!lines.map { it.toCharArray().toList() }.hasIndex(x + offset.first, y + i)) continue
 
                     if (lines[x + offset.first][y + i].toString().matches(symbolRegex)) sum += match.value.toInt()
                 }
@@ -134,7 +134,7 @@ class Day3 : Day {
 
             offsets.forEach { offset ->
                 for (i in offset.second) {
-                    if (!lines.hasIndex(x + offset.first, y + i)) continue
+                    if (!lines.map { it.toCharArray().toList() }.hasIndex(x + offset.first, y + i)) continue
                     if (lines[x + offset.first][y + i] == '*') {
                         starMap[(x + offset.first) to (y + i)]!!.add(match.value.toInt())
                     }
