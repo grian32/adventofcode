@@ -17,3 +17,5 @@ fun <T> indexOf2D(list: List<List<T>>, value: T): Pair<Int, Int> {
 
     return -1 to -1
 }
+
+fun minVar(vararg numbers : Int) = numbers.min()
