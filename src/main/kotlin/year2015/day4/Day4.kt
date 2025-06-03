@@ -18,6 +18,7 @@ class Day4 : Day {
     private fun common(p2: Boolean): String {
         val goodNumber = AtomicInteger()
         val found = AtomicBoolean()
+        val byteArrayInput = input.toByteArray()
 
         runBlocking {
             withContext(Dispatchers.Default) {
@@ -31,7 +32,7 @@ class Day4 : Day {
                             // get md in function, probably faster this way but i doubt it makes much of a diff..
                             val md = MessageDigest.getInstance("MD5")
                             while (!found.get()) {
-                                val md5 = md5(md, "$input$i")!!
+                                val md5 = md.digest(byteArrayInput + i.toString().toByteArray())
                                 val byte: Byte = 0
 
                                 if (md5[0] == byte && md5[1] == byte && ((p2 && md5[2] == byte) || (!p2 && md5[2].toInt() and 0xFF < 16))) {
@@ -49,10 +50,5 @@ class Day4 : Day {
 
 
         return goodNumber.get().toString()
-    }
-
-    private fun md5(md: MessageDigest, input: String): ByteArray? {
-        val digest = md.digest(input.toByteArray())
-        return digest
     }
 }
