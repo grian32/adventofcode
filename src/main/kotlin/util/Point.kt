@@ -1,4 +1,4 @@
-package me.grian.year2024.day8
+package me.grian.util
 
 data class Point(
     val x: Int,

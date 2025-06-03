@@ -1,12 +1,7 @@
 package me.grian.year2024.day8
 
 import me.grian.Day
-import me.grian.util.dropAt
-import me.grian.util.filterIsNotEmpty
-import me.grian.util.getInputText
-import me.grian.util.hasIndex
-import kotlin.math.max
-import kotlin.math.min
+import me.grian.util.*
 
 class Day8 : Day {
     override val input: String = getInputText(2024, 8)
