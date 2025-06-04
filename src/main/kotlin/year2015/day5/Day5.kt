@@ -39,10 +39,8 @@ class Day5 : Day {
     }
 
     private fun String.hasDuplicateConsecutiveLetters(): Boolean {
-        for (i in windowed(2)) {
-            if (i[0] == i[1]) {
-                return true
-            }
+        for (i in indices) {
+            if (this[i] == getOrNull(i+1)) return true
         }
         return false
     }
@@ -58,9 +56,8 @@ class Day5 : Day {
     }
 
     private fun String.hasSeparatedDuplicateLetters(): Boolean {
-        for (i in windowed(3)) {
-            if (i.getOrNull(2) == null) continue
-            if (i[0] == i[2]) return true
+        for (i in indices) {
+            if (this[i] == getOrNull(i+2)) return true
         }
 
         return false
