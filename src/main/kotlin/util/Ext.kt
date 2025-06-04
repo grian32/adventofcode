@@ -50,3 +50,11 @@ fun <T> List<T>.permute(length: Int): List<List<T>> {
 
 fun List<String>.filterIsNotEmpty(): List<String> =
     filter { it.isNotEmpty() }
+
+fun String.containsAny(lst: List<String>): Boolean {
+    for (i in lst) {
+        if (this.contains(i)) return true
+    }
+
+    return false
+}
