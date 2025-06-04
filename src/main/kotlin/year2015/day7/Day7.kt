@@ -26,55 +26,52 @@ class Day7 : Day {
         return findValue("a", mutableMapOf(), instructionList).toString()
     }
 
-    private fun findValue(value: String, solutionMap: MutableMap<String, UShort>, instructionList: List<Instruction>): UShort {
+    private fun findValue(
+        value: String,
+        solutionMap: MutableMap<String, UShort>,
+        instructionList: List<Instruction>,
+    ): UShort {
         if (solutionMap[value] != null) return solutionMap[value]!!
         val instruction = instructionList.find { it.destination == value }!!
 
         when (instruction.instruction) {
             InstructionType.ASSIGN -> {
-                val first = instruction.first.toUShortOrNull()
-
-                if (first != null) {
-                    solutionMap[instruction.destination] = first
-                } else {
-                    solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList)
-                }
+                solutionMap[instruction.destination] =
+                    instruction.first.toUShortOrNull() ?: findValue(instruction.first, solutionMap, instructionList)
             }
 
             InstructionType.AND -> {
                 val first = instruction.first.toUShortOrNull()
+                    ?: findValue(instruction.first, solutionMap, instructionList)
                 val second = instruction.second?.toUShortOrNull()
+                    ?: findValue(instruction.second!!, solutionMap, instructionList)
 
-                if (first != null && second == null) {
-                    solutionMap[instruction.destination] = first and findValue(instruction.second!!, solutionMap, instructionList)
-                } else if (first == null && second != null) {
-                    solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList) and second
-                } else if (first == null) { // both are not numbers..
-                    solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList) and findValue(instruction.second!!, solutionMap, instructionList)
-                }
+                solutionMap[instruction.destination] = first and second
             }
+
             InstructionType.OR -> {
                 val first = instruction.first.toUShortOrNull()
+                    ?: findValue(instruction.first, solutionMap, instructionList)
                 val second = instruction.second?.toUShortOrNull()
+                    ?: findValue(instruction.second!!, solutionMap, instructionList)
 
-                if (first != null && second == null) {
-                    solutionMap[instruction.destination] = first or findValue(instruction.second!!, solutionMap, instructionList)
-                } else if (first == null && second != null) {
-                    solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList) or second
-                } else if (first == null) { // both are not numbers..
-                    solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList) or findValue(instruction.second!!, solutionMap, instructionList)
-                }
+                solutionMap[instruction.destination] = first or second
             }
+
             InstructionType.LSHIFT -> {
                 val second = instruction.second!!.toInt()
 
-                solutionMap[instruction.destination] = (findValue(instruction.first, solutionMap, instructionList).toInt() shl second).toUShort()
+                solutionMap[instruction.destination] =
+                    (findValue(instruction.first, solutionMap, instructionList).toInt() shl second).toUShort()
             }
+
             InstructionType.RSHIFT -> {
                 val second = instruction.second!!.toInt()
 
-                solutionMap[instruction.destination] = (findValue(instruction.first, solutionMap, instructionList).toInt() shr second).toUShort()
+                solutionMap[instruction.destination] =
+                    (findValue(instruction.first, solutionMap, instructionList).toInt() shr second).toUShort()
             }
+
             InstructionType.NOT -> {
                 solutionMap[instruction.destination] = findValue(instruction.first, solutionMap, instructionList).inv()
             }
@@ -98,6 +95,7 @@ class Day7 : Day {
                     InstructionType.ASSIGN
                 )
             }
+
             2 -> {
                 Instruction(
                     instructions[1],
@@ -106,6 +104,7 @@ class Day7 : Day {
                     InstructionType.NOT
                 )
             }
+
             3 -> {
                 when (instructions[1]) {
                     "AND" -> Instruction(
@@ -114,18 +113,21 @@ class Day7 : Day {
                         dest,
                         InstructionType.AND
                     )
+
                     "OR" -> Instruction(
                         instructions[0],
                         instructions[2],
                         dest,
                         InstructionType.OR
                     )
+
                     "LSHIFT" -> Instruction(
                         instructions[0],
                         instructions[2],
                         dest,
                         InstructionType.LSHIFT
                     )
+
                     "RSHIFT" -> Instruction(
                         instructions[0],
                         instructions[2],
