@@ -1,5 +1,7 @@
 package me.grian.util
 
+import kotlinx.coroutines.currentCoroutineContext
+
 fun List<Int>.mul(): Int {
     var total = this[0]
 
@@ -45,6 +47,35 @@ fun <T> List<T>.permute(length: Int): List<List<T>> {
     }
 
     backtrack(mutableListOf())
+    return result
+}
+
+fun <T> List<T>.permuteUnique(): List<List<T>> {
+    val mut = toMutableList()
+    val result = mutableListOf<List<T>>()
+
+    fun generate(k: Int) {
+        // https://en.wikipedia.org/wiki/Heap%27s_algorithm
+        if (k == 1) {
+            result.add(mut.toList())
+
+            return
+        }
+
+        generate(k - 1)
+
+        for (i in 0 until k - 1) {
+            if (k % 2 == 0) {
+                mut.swap(i, k - 1)
+            } else {
+                mut.swap(0, k - 1)
+            }
+            generate(k - 1)
+        }
+    }
+
+    generate(size)
+
     return result
 }
 
