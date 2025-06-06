@@ -25,21 +25,21 @@ class Day10 : Day {
         // maybe char arrays? see how that goes..
         var curr = get(0)
         var len = 1
-        var byteArray = mutableListOf<Byte>()
+        val byteArray = mutableListOf<Byte>()
 
 
         for (i in 1..lastIndex) {
             if (curr == get(i)) {
                 len++
             } else {
-                byteArray.addAll(len.toCharCode())
+                byteArray.addAll(len.toCharCodes())
                 byteArray.add(curr)
                 curr = get(i)
                 len = 1
             }
 
             if (i == lastIndex) {
-                byteArray.addAll(len.toCharCode())
+                byteArray.addAll(len.toCharCodes())
                 byteArray.add(curr)
             }
         }
@@ -47,7 +47,15 @@ class Day10 : Day {
         return byteArray.toByteArray()
     }
 
-    private fun Int.toCharCode(): List<Byte> {
-        return toString().map { it.code }.map { it.toByte() }
+    private fun Int.toCharCodes(): List<Byte> {
+        val digits = mutableListOf<Byte>()
+        var num = this
+
+        while (num > 0) {
+            digits.add((48 + (num % 10)).toByte())
+            num /= 10
+        }
+
+        return digits
     }
 }
