@@ -7,13 +7,12 @@ class Day10 : Day {
     override val input: String
         get() = getInputText(2015, 10)
 
-    override fun partOne(): String = common(40).length.toString()
+    override fun partOne(): String = common(40).size.toString()
 
-    // FIXME: slow as a dog, part 1 takes 10s, part 2 i left running while i was at gym for shits and giggles.. took 40 minutes lmao
-    override fun partTwo(): String = common(50).length.toString()
+    override fun partTwo(): String = common(50).size.toString()
 
-    private fun common(count: Int): String {
-        var currentSequence = input
+    private fun common(count: Int): ByteArray {
+        var currentSequence = input.toByteArray()
 
         repeat(count) {
             currentSequence = currentSequence.convertDigits()
@@ -22,27 +21,33 @@ class Day10 : Day {
         return currentSequence
     }
 
-    private fun String.convertDigits(): String {
-        if (toSet().size == 1) return "$length${get(0)}"
-
+    private fun ByteArray.convertDigits(): ByteArray {
+        // maybe char arrays? see how that goes..
         var curr = get(0)
         var len = 1
-        var str = ""
+        var byteArray = mutableListOf<Byte>()
+
 
         for (i in 1..lastIndex) {
             if (curr == get(i)) {
                 len++
             } else {
-                str += "$len$curr"
+                byteArray.addAll(len.toCharCode())
+                byteArray.add(curr)
                 curr = get(i)
                 len = 1
             }
 
             if (i == lastIndex) {
-                str += "$len$curr"
+                byteArray.addAll(len.toCharCode())
+                byteArray.add(curr)
             }
         }
 
-        return str
+        return byteArray.toByteArray()
+    }
+
+    private fun Int.toCharCode(): List<Byte> {
+        return toString().map { it.code }.map { it.toByte() }
     }
 }
