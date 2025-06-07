@@ -12,7 +12,7 @@ class Day11 : Day {
         var password = input
 
         while (!password.isValidPassword()) {
-            password = incrementPassword(password.toCharArray(), password.lastIndex).joinToString("")
+            password = password.incrementString()
         }
 
         return password
@@ -21,10 +21,10 @@ class Day11 : Day {
     override fun partTwo(): String {
         val firstPassword = partOne()
         // force increment once otherwise it's automatically valid
-        var secondPassword = incrementPassword(firstPassword.toCharArray(), firstPassword.lastIndex).joinToString("")
+        var secondPassword = firstPassword.incrementString()
 
         while (!secondPassword.isValidPassword()) {
-            secondPassword = incrementPassword(secondPassword.toCharArray(), secondPassword.lastIndex).joinToString("")
+            secondPassword = secondPassword.incrementString()
         }
 
         return secondPassword
@@ -41,6 +41,8 @@ class Day11 : Day {
             return charArr
         }
     }
+
+    private fun String.incrementString() = incrementPassword(toCharArray(), lastIndex).joinToString("")
 
     private fun String.isValidPassword(): Boolean =
         !containsAny(listOf("i", "o", "l")) &&
