@@ -24,4 +24,8 @@ class WeightedGraph<T>() {
     fun getAllNodes(): Set<T> {
         return (backing.keys.toList() + backing.values.map { it.map { it.first } }.flatten()).toSet()
     }
+
+    fun getAllKeys(): Set<T> = backing.keys
+
+    override fun toString(): String = backing.toString()
 }
