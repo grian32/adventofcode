@@ -4,4 +4,5 @@ data class Horse(
     val restTime: Int,
     val travelTime: Int,
     val travelSpeed: Int,
+    var distanceTravelled: Int = 0,
 )

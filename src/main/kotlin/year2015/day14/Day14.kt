@@ -30,7 +30,40 @@ class Day14 : Day {
     }
 
     override fun partTwo(): String {
-        TODO("Not yet implemented")
+        val horses = parseInput()
+        val timesRan = 2503
+
+        val chars = ('a'..'z').toList()
+        val map = mutableMapOf<Char, Pair<Horse,Int>>()
+
+        for (i in horses.indices) {
+            map[chars[i]] = horses[i] to 0
+        }
+
+        repeat(timesRan) {
+            for ((name, scoredHorse) in map) {
+                val (horse, score) = scoredHorse
+
+                val cycleTime = horse.travelTime + horse.restTime
+                val secondInCycle = it % cycleTime
+
+                if (secondInCycle < horse.travelTime) {
+                    horse.distanceTravelled += horse.travelSpeed
+                }
+            }
+
+            val highestDistance = map.maxOfOrNull { it.value.first.distanceTravelled }
+
+            map.replaceAll { c, pair ->
+                if (pair.first.distanceTravelled == highestDistance) {
+                    pair.first to (pair.second + 1)
+                } else {
+                    pair
+                }
+            }
+        }
+
+        return map.maxOfOrNull { it.value.second }.toString()
     }
 
     private fun parseInput(): List<Horse> {
