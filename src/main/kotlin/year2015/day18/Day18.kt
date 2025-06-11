@@ -86,7 +86,6 @@ class Day18 : Day {
     }
 
     private fun parseInput(): List<MutableList<Boolean>> {
-        // TODO: use bitset probably
         val grid: MutableList<MutableList<Boolean>> = mutableListOf()
 
         for (i in input.lines()) {
@@ -100,15 +99,6 @@ class Day18 : Day {
         }
 
         return grid
-    }
-
-    private fun List<List<Boolean>>.print() {
-        for (x in this.indices) {
-            for (y in this[x].indices) {
-                print(if (this[x][y]) "#" else ".")
-            }
-            println()
-        }
     }
 
     companion object {
