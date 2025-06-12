@@ -13,19 +13,13 @@ class Day19 : Day {
 
         for (i in replacements) {
             for (j in starter.indices) {
-                // required so i can return early when it's n/a
-                val test = when (i.first.length) {
-                    1 -> starter[j].toString()
-                    2 -> {
-                        if (starter.getOrNull(j + 1) == null) continue
-                        starter[j] + starter[j+1].toString()
-                    }
-                    else -> continue
-                }
+                if (starter.getOrNull(j + 1) == null) continue
 
-                if (test == i.first) {
+                val endIdx = j + i.first.length
+
+                if (starter.substring(j..<endIdx) == i.first) {
                     distinctMolecules.add(
-                        starter.substring(0, j) + i.second + starter.substring(j + i.first.length)
+                        starter.replaceRange(j..<endIdx, i.second)
                     )
                 }
             }
