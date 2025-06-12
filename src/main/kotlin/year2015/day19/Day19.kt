@@ -35,7 +35,23 @@ class Day19 : Day {
     }
 
     override fun partTwo(): String {
-        TODO("Not yet implemented")
+        var (replacements, end) = parseInput()
+        var sum = 0
+
+        while (end != "e") {
+            for (i in replacements) {
+                // literally going backwards through the string, so dumb lol, was more hail mary than anything, think
+                // i got really lucky with the input however since i've seen other's solns that are literally the same
+                // but they had to shuffle the the replacements for it to go through eventually..
+                if (end.contains(i.second)) {
+                    val idx = end.lastIndexOf(i.second)
+                    end = end.replaceRange(idx..<idx+i.second.length, i.first)
+                    sum++
+                }
+            }
+        }
+
+        return sum.toString()
     }
 
     // replacements, starter
