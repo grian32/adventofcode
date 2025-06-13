@@ -29,7 +29,21 @@ class Day20 : Day {
     override fun partTwo(): String {
         val presentGoal = input.toInt()
 
-        return ""
+        val houses = IntArray(presentGoal / 10 + 1) { 0 }
+
+        /**
+         * completely misunderstood this problem initially, there are infinite elves & infinite houses but each elf
+         * only delivers to first 50 houses he can, so we can just bf and stop after 50 houses for each elf and it's
+         * still quick, even faster than p1
+         */
+        for (i in 1..<(presentGoal / 10)) {
+            for ((countDelivered, j) in (i..(presentGoal / 10) step i).withIndex()) {
+                houses[j] += i * 11
+                if (countDelivered + 1 == 50) break
+            }
+        }
+
+        return houses.indexOfFirst { it >= presentGoal }.toString()
     }
 
     // https://math.stackexchange.com/a/22723
