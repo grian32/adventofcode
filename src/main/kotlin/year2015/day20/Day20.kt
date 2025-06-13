@@ -37,9 +37,9 @@ class Day20 : Day {
          * still quick, even faster than p1
          */
         for (i in 1..<(presentGoal / 10)) {
-            for ((countDelivered, j) in (i..(presentGoal / 10) step i).withIndex()) {
+            val min = minOf(presentGoal / 10, i * 50)
+            for (j in i..min step i) {
                 houses[j] += i * 11
-                if (countDelivered + 1 == 50) break
             }
         }
 
