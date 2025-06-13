@@ -33,8 +33,9 @@ class Day20 : Day {
 
         /**
          * completely misunderstood this problem initially, there are infinite elves & infinite houses but each elf
-         * only delivers to first 50 houses he can, so we can just bf and stop after 50 houses for each elf and it's
-         * still quick, even faster than p1
+         * only delivers to first 50 houses he can, so we can just bf and stop after 50 houses for each elf
+         * (i.e i..i * 50 step i, since you step i you get no extra houses cuz of the * 50)and it's still quick,
+         * even faster than p1
          */
         for (i in 1..<(presentGoal / 10)) {
             val min = minOf(presentGoal / 10, i * 50)
@@ -43,6 +44,7 @@ class Day20 : Day {
             }
         }
 
+        // also computing this is so slow that it's not worth it to return early lol
         return houses.indexOfFirst { it >= presentGoal }.toString()
     }
 
